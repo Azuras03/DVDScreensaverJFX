@@ -1,5 +1,5 @@
 ### DVD ScreenSaver (JavaFX)
-Created by Azuras (aka Nicolas R.)
+Created by Azuras (aka Nicolas R.) ❄
 
 ## _Features_ :
 - Extend and shrink the Cube
