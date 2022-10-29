@@ -27,43 +27,59 @@ public class DVDModele {
 
     public void move(int distance) {
         switch (direction) {
-            case "DB" -> {
+            case "DB":
                 x += distance;
                 y -= distance;
-            }
-            case "GB" -> {
+                break;
+            case "GB":
                 x -= distance;
                 y -= distance;
-            }
-            case "GH" -> {
+                break;
+            case "GH":
                 x -= distance;
                 y += distance;
-            }
-            case "DH" -> {
+                break;
+            case "DH":
                 x += distance;
                 y += distance;
-            }
+                break;
         }
     }
 
     public void changeDirection(int selector) {
         switch (selector) {
-            case 1 -> {
+            case 1:
                 switch (direction) {
-                    case "DB" -> direction = "GB";
-                    case "GB" -> direction = "DB";
-                    case "GH" -> direction = "DH";
-                    case "DH" -> direction = "GH";
+                    case "DB":
+                        direction = "GB";
+                        break;
+                    case "GB":
+                        direction = "DB";
+                        break;
+                    case "GH":
+                        direction = "DH";
+                        break;
+                    case "DH":
+                        direction = "GH";
+                        break;
                 }
-            }
-            case 2 -> {
+                break;
+            case 2:
                 switch (direction) {
-                    case "DB" -> direction = "DH";
-                    case "GB" -> direction = "GH";
-                    case "GH" -> direction = "GB";
-                    case "DH" -> direction = "DB";
+                    case "DB":
+                        direction = "DH";
+                        break;
+                    case "GB":
+                        direction = "GH";
+                        break;
+                    case "GH":
+                        direction = "GB";
+                        break;
+                    case "DH":
+                        direction = "DB";
+                        break;
                 }
-            }
+                break;
         }
     }
 
