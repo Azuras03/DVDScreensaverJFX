@@ -1,4 +1,4 @@
-### DVD ScreenSaver (JavaFX)
+# DVD ScreenSaver (JavaFX) 📀
 Created by Azuras (aka Nicolas R.) ❄
 
 ## _Features_ :
