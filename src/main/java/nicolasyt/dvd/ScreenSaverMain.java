@@ -3,10 +3,14 @@ package nicolasyt.dvd;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -47,22 +51,38 @@ public class ScreenSaverMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        StackPane root = new StackPane();
+        BorderPane root = new BorderPane();
+        StackPane root2 = new StackPane();
         DVDModele dvd = new DVDModele(DVD_START_X, DVD_START_Y, DVD_WIDTH, DVD_HEIGHT);
         EcranModele ecran = new EcranModele(WIN_WIDTH, WIN_HEIGHT, dvd);
         DVDVue dvdVue = new DVDVue(dvd);
         VueEcran vueEcran = new VueEcran(dvdVue, ecran);
         Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
-        root.getChildren().add(vueEcran);
+        root.setCenter(root2);
+        root2.getChildren().add(vueEcran);
+        root.setStyle("-fx-background-color: black;");
 
         stage.setTitle("✨ DVD Screensaver | 🟪");
 
-        Text text = new Text(INIT_TEXT + "\n\nby Nicolas R.");
+        Text text = new Text(INIT_TEXT + "\n\nbyNicolas R.");
         text.setTextAlignment(TextAlignment.CENTER);
         text.setFill(TEXT_COLOR);
         text.setStyle("-fx-font: 30 arial;");
-        root.getChildren().add(text);
+        root2.getChildren().add(text);
         int timeOnScreenInitial = timeOnScreen;
+
+        HBox config = new HBox();
+        config.setAlignment(javafx.geometry.Pos.CENTER);
+        Slider slider = new Slider(0, 100, 10);
+        slider.setMajorTickUnit(10);
+        slider.setMinorTickCount(5);
+        config.getChildren().add(slider);
+        config.setVisible(false);
+        root.setBottom(config);
+
+        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            DVD_MOVE_CURR = (int) (DVD_MOVE_INITIAL * (newValue.doubleValue() / 10));
+        });
 
         AnimationTimer an = new AnimationTimer() {
             @Override
@@ -101,9 +121,12 @@ public class ScreenSaverMain extends Application {
                     DVD_MOVE_CURR = DVD_MOVE_INITIAL;
                     dvd.falsifyCornerTouch();
                     break;
-                case TAB:
+                case SPACE:
                     timeOnScreen = timeOnScreenInitial;
                     text.setText(INIT_TEXT);
+                case TAB:
+                    config.setVisible(!config.isVisible());
+                    break;
             }
             stage.setTitle("✨ DVD Screensaver | 🟪 " + dvd.directX + "x" + dvd.directY);
             CURR_WRITTEN_CODE = CURR_WRITTEN_CODE + event.getText();
