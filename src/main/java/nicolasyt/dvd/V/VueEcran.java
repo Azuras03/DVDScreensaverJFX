@@ -1,8 +1,8 @@
 package nicolasyt.dvd.V;
 
 import javafx.scene.layout.Pane;
-import nicolasyt.dvd.M.DVDModele;
 import nicolasyt.dvd.M.EcranModele;
+import nicolasyt.dvd.ScreenSaverMain;
 
 public class VueEcran extends Pane {
 
@@ -18,10 +18,9 @@ public class VueEcran extends Pane {
 
     public void moveDVD() {
 
-        if(ecran.moveDVDEcran(10)){
+        if(ecran.moveDVDEcran(ScreenSaverMain.DVD_MOVE_CURR)){
             dvdVue.changeColor();
         }
         dvdVue.updateVueDVD();
     }
-
 }

@@ -21,6 +21,8 @@ public class DVDVue extends Rectangle{
     public void updateVueDVD() {
         this.setX(dvd.x);
         this.setY(dvd.y);
+        this.setWidth(dvd.directX);
+        this.setHeight(dvd.directY);
         if(dvd.cornerTouch){
             changeColor();
         }
