@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import nicolasyt.dvd.M.DVDModele;
 import nicolasyt.dvd.M.EcranModele;
@@ -20,23 +21,28 @@ public class ScreenSaverMain extends Application {
 
     public static int WIN_WIDTH = 1280;
     public static int WIN_HEIGHT = 720;
+    public static int DVD_MOVE_CURR = 10;
+    public static int timeOnScreen = 300;
+    public static int DVD_MOVE_INITIAL = 10;
     public static final int DVD_WIDTH = 100;
     public static final int DVD_HEIGHT = 100;
     public static final int DVD_START_X = 0;
     public static final int DVD_START_Y = 0;
-    public static int DVD_MOVE_INITIAL = 10;
-    public static int DVD_MOVE_CURR = 10;
-    public static final int DVD_STICK_MODIF = 30;
-    public static String CHEAT_CODE_SPEED = "sugoma";
-    public static String CHEAT_CODE_SMOL = "smol";
-    public static String CURR_WRITTEN_CODE = "";
-    public static int timeOnScreen = 300;
+    public static final int DVD_STICK_MODIF = 10;
+
     public static final KeyCode INPUT_UP = KeyCode.UP;
     public static final KeyCode INPUT_DOWN = KeyCode.DOWN;
     public static final KeyCode INPUT_LEFT = KeyCode.LEFT;
     public static final KeyCode INPUT_RIGHT = KeyCode.RIGHT;
+
     public static final Color TEXT_COLOR = Color.GRAY;
+
     public static boolean cheatsRunning = false;
+
+    public static String CHEAT_CODE_SPEED = "sugoma";
+    public static String CHEAT_CODE_SMOL = "smol";
+    public static String CURR_WRITTEN_CODE = "";
+    public static final String INIT_TEXT = (INPUT_RIGHT + " & " + INPUT_UP + " to expand, " + INPUT_LEFT + " & " + INPUT_DOWN + " to shrink");
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -47,13 +53,12 @@ public class ScreenSaverMain extends Application {
         DVDVue dvdVue = new DVDVue(dvd);
         VueEcran vueEcran = new VueEcran(dvdVue, ecran);
         Scene scene = new Scene(root, WIN_WIDTH, WIN_HEIGHT);
-        stage.setTitle("DVD Screensaver 🟪");
-        stage.getIcons().add(new Image("file:resources/images/logoApp.png"));
-        stage.setScene(scene);
-        stage.show();
         root.getChildren().add(vueEcran);
 
-        Text text = new Text(INPUT_RIGHT + " & " + INPUT_UP + " to expand, " + INPUT_LEFT + " & " + INPUT_DOWN + " to shrink");
+        stage.setTitle("✨ DVD Screensaver | 🟪");
+
+        Text text = new Text(INIT_TEXT + "\n\nby Nicolas R.");
+        text.setTextAlignment(TextAlignment.CENTER);
         text.setFill(TEXT_COLOR);
         text.setStyle("-fx-font: 30 arial;");
         root.getChildren().add(text);
@@ -62,14 +67,12 @@ public class ScreenSaverMain extends Application {
         AnimationTimer an = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if(!cheatsRunning) {
-                    if(timeOnScreen >= 0) {
-                        timeOnScreen--;
-                        text.setOpacity((float) 1 * timeOnScreen / timeOnScreenInitial);
+                if (timeOnScreen > 0) {
+                    timeOnScreen--;
+                    text.setOpacity((float) 1 * timeOnScreen / timeOnScreenInitial);
+                    if (timeOnScreen == 0) {
+                        text.setOpacity(0);
                     }
-                    if(timeOnScreen == 0) {text.setText("");}
-                } else if (text.getOpacity() < 1) {
-                    text.setOpacity(1);
                 }
                 vueEcran.moveDVD();
                 WIN_WIDTH = (int) scene.getWidth();
@@ -98,7 +101,11 @@ public class ScreenSaverMain extends Application {
                     DVD_MOVE_CURR = DVD_MOVE_INITIAL;
                     dvd.falsifyCornerTouch();
                     break;
+                case TAB:
+                    timeOnScreen = timeOnScreenInitial;
+                    text.setText(INIT_TEXT);
             }
+            stage.setTitle("✨ DVD Screensaver | 🟪 " + dvd.directX + "x" + dvd.directY);
             CURR_WRITTEN_CODE = CURR_WRITTEN_CODE + event.getText();
             if ((CURR_WRITTEN_CODE).toUpperCase().contains(CHEAT_CODE_SPEED.toUpperCase())) {
                 DVD_MOVE_CURR = DVD_MOVE_CURR + 30;
@@ -106,6 +113,7 @@ public class ScreenSaverMain extends Application {
                 text.setOpacity(1);
                 CURR_WRITTEN_CODE = "";
                 cheatsRunning = true;
+                timeOnScreen = timeOnScreenInitial;
             }
 
             if ((CURR_WRITTEN_CODE).toUpperCase().contains(CHEAT_CODE_SMOL.toUpperCase())) {
@@ -115,12 +123,16 @@ public class ScreenSaverMain extends Application {
                 text.setOpacity(1);
                 CURR_WRITTEN_CODE = "";
                 cheatsRunning = true;
+                timeOnScreen = timeOnScreenInitial;
             }
 
-            if(CURR_WRITTEN_CODE.length() > 100){
+            if (CURR_WRITTEN_CODE.length() > 100) {
                 CURR_WRITTEN_CODE = "";
             }
         });
+        stage.getIcons().add(new Image("file:resources/images/logoApp.png"));
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
