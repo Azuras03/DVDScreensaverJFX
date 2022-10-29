@@ -15,8 +15,8 @@ Created by Azuras (aka Nicolas R.)
 - Enjoy!
 
 ## _Commands_ :
-- `UP` & `DOWN` : Increase the size of the cube
-- `LEFT` & `RIGHT` : Decrease the size of the cube
+- `UP` & `RIGHT` : Increase the size of the cube
+- `LEFT` & `DOWN` : Decrease the size of the cube
 - `TAB` : Shows the main commands again on screen
 - `ECHAP` : Reset the cube to its original speed and size (in case you've bumped into a corner, or you activated cheat codes)
 - `SOME WORDS` : Type words that come in your mind, and see what happens! (maybe you'll find something interesting 🙃)
