@@ -71,9 +71,17 @@ public class DVDModele {
         cornerTouch = !cornerTouch;
     }
 
+    public void falsifyCornerTouch() {
+        cornerTouch = false;
+    }
+
+    public void verifyCornerTouch() {
+        cornerTouch = true;
+    }
+
     public void setDirectX(int directXPlus) {
         if (x > 0 && x + directX + directXPlus < ScreenSaverMain.WIN_WIDTH) {
-            if (directX + directXPlus > 0) {
+            if (directX + directXPlus > 1) {
                 this.directX += directXPlus;
             }
         }
@@ -81,7 +89,7 @@ public class DVDModele {
 
     public void setDirectY(int directYPlus) {
         if (y > 0 && y + directY + directYPlus < ScreenSaverMain.WIN_HEIGHT) {
-            if (directY + directYPlus > 0) {
+            if (directY + directYPlus > 1) {
                 this.directY += directYPlus;
             }
         }
