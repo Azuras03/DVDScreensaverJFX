@@ -1,5 +1,7 @@
 package nicolasyt.dvd.M;
 
+import nicolasyt.dvd.ScreenSaverMain;
+
 public class DVDModele {
     public int x;
     public int y;
@@ -9,10 +11,10 @@ public class DVDModele {
     public boolean cornerTouch;
 
     public DVDModele(int x, int y, int dx, int dy) {
-        if(dx <= 0){
+        if (dx <= 0) {
             dx = 10;
         }
-        if(dy <= 0){
+        if (dy <= 0) {
             dy = 10;
         }
         this.x = x;
@@ -65,8 +67,23 @@ public class DVDModele {
         }
     }
 
-    public void changeCornerTouch(){
+    public void changeCornerTouch() {
         cornerTouch = !cornerTouch;
     }
 
+    public void setDirectX(int directXPlus) {
+        if (x > 0 && x + directX + directXPlus < ScreenSaverMain.WIN_WIDTH) {
+            if (directX + directXPlus > 0) {
+                this.directX += directXPlus;
+            }
+        }
+    }
+
+    public void setDirectY(int directYPlus) {
+        if (y > 0 && y + directY + directYPlus < ScreenSaverMain.WIN_HEIGHT) {
+            if (directY + directYPlus > 0) {
+                this.directY += directYPlus;
+            }
+        }
+    }
 }

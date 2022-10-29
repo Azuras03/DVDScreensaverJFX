@@ -1,5 +1,7 @@
 package nicolasyt.dvd.M;
 
+import nicolasyt.dvd.ScreenSaverMain;
+
 public class EcranModele {
     public int width;
     public int height;
@@ -33,10 +35,15 @@ public class EcranModele {
             countChgs++;
         }
         if(countChgs == 2){
-            dvd.cornerTouch = true;
+            dvd.changeCornerTouch();
         }
         dvd.move(distance);
         return chgDirection;
+    }
+
+    public void updateEcran(){
+        this.width = ScreenSaverMain.WIN_WIDTH;
+        this.height = ScreenSaverMain.WIN_HEIGHT;
     }
 
     public int getWidth() {
